@@ -1,16 +1,17 @@
 
-export interface Medication {
+export interface MedicineRecord {
   id: string;
-  name: string;          // 中文商品名
-  englishName?: string;  // 英文商品名
-  scientificName?: string; // 學名
-  specification?: string;  // 規格 (如: 500mg)
-  location: string;      // 儲位
-  description?: string;
-  category?: string;
+  name: string;        // 藥名
+  spec: string;        // 規格
+  location: string;    // 儲位
+  isRefrigerated: boolean; // 是否為冰庫
+  category: string;    // 類別
+  stock: number;       // 庫存量
+  unit: string;        // 單位
+  status: string;      // 狀態
 }
 
-export enum AppTab {
-  SEARCH = 'search',
-  MANAGEMENT = 'management'
+export interface SortState {
+  column: keyof MedicineRecord;
+  direction: 'asc' | 'desc';
 }

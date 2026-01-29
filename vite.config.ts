@@ -3,19 +3,8 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY),
-  },
-  build: {
-    outDir: 'dist',
-    emptyOutDir: true,
-    rollupOptions: {
-      input: {
-        main: './index.html'
-      }
-    }
-  },
+  base: './', // 改為相對路徑，同時支援 GitHub Pages 與 Vercel
   server: {
-    port: 3000
+    host: '0.0.0.0',
   }
 });
