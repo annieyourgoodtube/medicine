@@ -195,7 +195,9 @@ const App: React.FC = () => {
                         {med.name}
                         {med.specification && <span className="ml-2 text-2xl text-red-600 font-bold">{med.specification}</span>}
                       </h3>
-                      {med.englishName && <span className="text-sm text-slate-400 font-black uppercase block tracking-tight">{med.englishName}</span>}
+                      <span className="text-sm text-slate-400 font-black uppercase block tracking-tight">
+                        {med.scientificName} {med.englishName ? `(${med.englishName})` : ''}
+                      </span>
                     </div>
                     <div className="flex items-center gap-4 px-8 py-4 bg-[#004766] text-white rounded-2xl shadow-xl">
                       <MapPin size={24} className="text-cyan-300" />
