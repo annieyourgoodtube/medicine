@@ -8,7 +8,6 @@ import {
   Loader2,
   X,
   Database,
-  Heart,
   Package
 } from 'lucide-react';
 
@@ -225,13 +224,10 @@ const App: React.FC = () => {
             )}
           </div>
 
-          <div className="py-12 flex flex-col items-center gap-3">
-             <h2 className="text-2xl font-black tracking-tight text-slate-900">台中慈濟醫院藥學部</h2>
-             <p className="text-xl font-bold flex items-center gap-2 text-slate-900">
-               <Heart size={20} className="fill-red-600 text-red-600" />
-               <span>許文馨藥師</span>
-             </p>
-             <p className="text-lg font-bold text-slate-900">2026年1月製</p>
+          <div className="py-12 flex flex-col items-center gap-2 text-center">
+             <h2 className="text-2xl font-black tracking-tight text-slate-900 mb-2">台中慈濟醫院藥學部</h2>
+             <p className="text-xl font-bold text-slate-900">製作：許文馨</p>
+             <p className="text-lg font-bold text-slate-900">維護：施瑢家、李紀賢、李家豪</p>
           </div>
         </div>
       </main>
