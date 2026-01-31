@@ -98,6 +98,9 @@ const App: React.FC = () => {
 
       const newMeds = dataLines.map((line, index) => {
         const values = splitCSVLine(line);
+        // 檢查整行是否有「小藥庫」
+        const isSmallPharmacy = values.some(v => v.includes('小藥庫'));
+        
         return {
           id: `med-${index}-${Date.now()}`,
           name: values[map.nameIdx] || '',
@@ -106,6 +109,7 @@ const App: React.FC = () => {
           specification: values[map.specIdx] || '',
           location: values[map.locIdx] || '',
           description: '', 
+          isSmallPharmacy
         };
       }).filter(m => m.name !== '' || m.location !== '');
 
@@ -194,6 +198,7 @@ const App: React.FC = () => {
                       <h3 className="font-black text-slate-900 text-2xl mb-1 leading-tight">
                         {med.name}
                         {med.specification && <span className="ml-2 text-2xl text-red-600 font-bold">{med.specification}</span>}
+                        {med.isSmallPharmacy && <span className="ml-2 text-2xl text-rose-500 font-bold">❤庫</span>}
                       </h3>
                       <span className="text-sm text-slate-400 font-black uppercase block tracking-tight">
                         {med.scientificName} {med.englishName ? `(${med.englishName})` : ''}

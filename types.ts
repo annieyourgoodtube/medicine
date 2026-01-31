@@ -7,4 +7,5 @@ export interface Medication {
   location: string;      // 儲位
   description?: string;
   category?: string;
+  isSmallPharmacy?: boolean; // 是否為小藥庫
 }
