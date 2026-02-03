@@ -8,4 +8,5 @@ export interface Medication {
   description?: string;
   category?: string;
   isSmallPharmacy?: boolean; // 是否為小藥庫
+  packetMachineValue?: string; // 藥包機數值
 }

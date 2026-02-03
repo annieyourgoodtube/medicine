@@ -76,7 +76,8 @@ const App: React.FC = () => {
         name: ['中文', '名稱', '藥名', '品名', '商品名', 'name', 'drug', '商品名稱'],
         englishName: ['英文', 'eng', 'english', '英文名'],
         scientificName: ['學名', '成分', '成份', 'generic', 'scientific'],
-        specification: ['規格', '劑量', '包裝', '容量', 'spec', 'strength']
+        specification: ['規格', '劑量', '包裝', '容量', 'spec', 'strength'],
+        packetMachine: ['藥包機', 'atc', '包藥機', 'machine']
       };
 
       const findIdx = (keys: string[], defaultIdx: number) => {
@@ -89,7 +90,8 @@ const App: React.FC = () => {
         nameIdx: findIdx(fieldMap.name, 1),
         engIdx: findIdx(fieldMap.englishName, 2),
         sciIdx: findIdx(fieldMap.scientificName, 3),
-        specIdx: findIdx(fieldMap.specification, 4)
+        specIdx: findIdx(fieldMap.specification, 4),
+        atcIdx: findIdx(fieldMap.packetMachine, -1)
       };
 
       const startRow = headers.some(h => ['位', '名', '藥'].some(k => h.includes(k))) ? 1 : 0;
@@ -107,6 +109,7 @@ const App: React.FC = () => {
           scientificName: values[map.sciIdx] || '',
           specification: values[map.specIdx] || '',
           location: values[map.locIdx] || '',
+          packetMachineValue: (map.atcIdx !== -1 && values[map.atcIdx]) ? values[map.atcIdx] : undefined,
           description: '', 
           isSmallPharmacy
         };
@@ -205,7 +208,10 @@ const App: React.FC = () => {
                     </div>
                     <div className="flex items-center gap-4 px-8 py-4 bg-[#004766] text-white rounded-2xl shadow-xl">
                       <MapPin size={24} className="text-cyan-300" />
-                      <span className="text-5xl font-black tracking-tighter tabular-nums flex-1">{med.location || '無儲位'}</span>
+                      <span className="text-5xl font-black tracking-tighter tabular-nums flex-1">
+                        {med.location || '無儲位'}
+                        {med.packetMachineValue && <span className="ml-3 text-4xl opacity-70 font-bold">({med.packetMachineValue})</span>}
+                      </span>
                       <ChevronRight size={20} className="opacity-20" />
                     </div>
                   </div>
