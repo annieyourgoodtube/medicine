@@ -76,7 +76,8 @@ const App: React.FC = () => {
         englishName: ['英文', 'eng', 'english', '英文名'],
         scientificName: ['學名', '成分', '成份', 'generic', 'scientific'],
         specification: ['規格', '劑量', '包裝', '容量', 'spec', 'strength'],
-        packetMachine: ['藥包機', 'atc', '包藥機', 'machine']
+        packetMachine: ['藥包機', 'atc', '包藥機', 'machine'],
+        splitMedication: ['拆藥否', '拆藥', 'split']
       };
 
       const findIdx = (keys: string[], defaultIdx: number) => {
@@ -90,7 +91,8 @@ const App: React.FC = () => {
         engIdx: findIdx(fieldMap.englishName, 2),
         sciIdx: findIdx(fieldMap.scientificName, 3),
         specIdx: findIdx(fieldMap.specification, 4),
-        atcIdx: findIdx(fieldMap.packetMachine, -1)
+        atcIdx: findIdx(fieldMap.packetMachine, -1),
+        splitIdx: findIdx(fieldMap.splitMedication, -1)
       };
 
       const startRow = headers.some(h => ['位', '名', '藥'].some(k => h.includes(k))) ? 1 : 0;
@@ -108,6 +110,7 @@ const App: React.FC = () => {
           specification: values[map.specIdx] || '',
           location: values[map.locIdx] || '',
           packetMachineValue: (map.atcIdx !== -1 && values[map.atcIdx]) ? values[map.atcIdx] : undefined,
+          splitMedicationValue: (map.splitIdx !== -1 && values[map.splitIdx]) ? values[map.splitIdx] : undefined,
           description: '', 
           isSmallPharmacy
         };
