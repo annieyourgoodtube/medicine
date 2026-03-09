@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { Medication } from './types';
 import { INITIAL_MEDICATIONS } from './constants';
 import { 
@@ -20,7 +20,6 @@ const App: React.FC = () => {
   });
   
   const [searchTerm, setSearchTerm] = useState('');
-  // 雖然移除了維護介面，但仍保留讀取 URL 的能力，方便日後擴充或維持現有邏輯
   const [sheetUrl] = useState(() => localStorage.getItem('pharmacy_sheet_url') || DEFAULT_URL);
   const [lastSynced, setLastSynced] = useState(() => localStorage.getItem('pharmacy_last_synced') || '');
   const [isSyncing, setIsSyncing] = useState(false);
@@ -99,7 +98,6 @@ const App: React.FC = () => {
 
       const newMeds = dataLines.map((line, index) => {
         const values = splitCSVLine(line);
-        // 檢查整行是否有「小藥庫」
         const isSmallPharmacy = values.some(v => v.includes('小藥庫'));
         
         return {
@@ -169,21 +167,25 @@ const App: React.FC = () => {
         <div className="space-y-6">
           <div className="relative group mt-2">
             <Search className="absolute left-5 top-5 text-slate-400 group-focus-within:text-[#004766] transition-colors" size={24} />
+            
             <input 
               type="text" 
-              placeholder="搜尋中/英/學名/商品名..." 
+              placeholder="搜尋藥名" 
               className="w-full pl-14 pr-14 py-5 bg-white border-2 border-slate-100 rounded-3xl focus:ring-8 focus:ring-[#004766]/5 focus:border-[#004766] outline-none transition-all text-xl font-black text-slate-900 placeholder:text-slate-300 shadow-sm"
               value={searchTerm} 
               onChange={(e) => setSearchTerm(e.target.value)} 
             />
-            {searchTerm && (
-              <button 
-                onClick={() => setSearchTerm('')} 
-                className="absolute right-4 top-4 p-2 bg-slate-100 text-slate-500 rounded-full hover:bg-slate-200 transition-colors"
-              >
-                <X size={18} />
-              </button>
-            )}
+            
+            <div className="absolute right-4 top-3 flex items-center gap-1">
+              {searchTerm && (
+                <button 
+                  onClick={() => setSearchTerm('')} 
+                  className="p-2 bg-slate-100 text-slate-500 rounded-full hover:bg-slate-200 transition-colors"
+                >
+                  <X size={18} />
+                </button>
+              )}
+            </div>
           </div>
           
           <div className="space-y-4">
@@ -195,8 +197,13 @@ const App: React.FC = () => {
             ) : filteredMedications.length > 0 ? (
               <>
                 {filteredMedications.slice(0, 10).map(med => (
-                  <div key={med.id} className="p-6 rounded-[35px] border border-slate-100 shadow-[0_8px_25px_rgba(0,0,0,0.02)] flex flex-col group active:scale-[0.98] transition-all bg-white">
-                    <div className="flex-1 mb-3">
+                  <div key={med.id} className="relative p-6 rounded-[35px] border border-slate-100 shadow-[0_8px_25px_rgba(0,0,0,0.02)] flex flex-col group active:scale-[0.98] transition-all bg-white">
+                    {med.splitMedicationValue && (
+                      <div className="absolute top-0 right-0 bg-yellow-400 text-black font-black px-5 py-2 rounded-bl-3xl rounded-tr-[35px] text-xl shadow-sm z-10">
+                        拆藥: {med.splitMedicationValue}
+                      </div>
+                    )}
+                    <div className="flex-1 mb-3 pr-24">
                       <h3 className="font-black text-slate-900 text-2xl mb-1 leading-tight">
                         {med.name}
                         {med.specification && <span className="ml-2 text-2xl text-red-600 font-bold">{med.specification}</span>}
